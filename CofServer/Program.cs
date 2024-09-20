@@ -1,10 +1,13 @@
 ﻿//Код с урока
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 string serverUrl = "http://localhost:5000";
 
 var server = new HttpListener();
+
+List<CoffeeOrder> CoffeOrderList = new List<CoffeeOrder>();
 
 server.Prefixes.Add(serverUrl + "/create/");
 server.Prefixes.Add(serverUrl + "/get-all/");
@@ -23,9 +26,20 @@ while (true)
         byte[] buffer = new byte[request.ContentLength64];
         request.InputStream.Read(buffer, 0, buffer.Length);
 
-        string requestBody = Encoding.UTF8.GetString(buffer);
+        string jsonstring = Encoding.UTF8.GetString(buffer);
 
-        Console.WriteLine(requestBody);
+        try
+        {
+            CoffeeOrder _order = JsonSerializer.Deserialize<CoffeeOrder>(jsonstring);
+            _order.PrintOrderInfo();
+            CoffeOrderList.Add(_order);
+            
+        }
+        catch (Exception ex)
+        {  
+            Console.WriteLine($"ERROR \n TEXT TYPE:{jsonstring} IS NOT JSON DESERIALIZEBLE FORMAT");
+        }
+        
     }
 
 

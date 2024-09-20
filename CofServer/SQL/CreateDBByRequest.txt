@@ -1,0 +1,17 @@
+//idk how to add mssql db (lzy to check how)
+
+CREATE DATABASE CofServerDB;
+
+USE CofServerDB;
+
+CREATE TABLE COFTable
+(
+	ID int NOT NULL,
+	PRIMARY KEY (ID),
+	CoffeeType varchar(255),
+	IsFinished BIT,
+	DateOfOrder DateTime
+);
+
+
+
