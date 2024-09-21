@@ -1,0 +1,1 @@
+curl -d "{""CoffeeType"": ""Latte""}" http://localhost:5000/create/

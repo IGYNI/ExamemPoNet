@@ -20,11 +20,7 @@ while (true)
     var request = context.Request;
     var response = context.Response; 
 
-    if (request.Url.AbsoluteUri == (serverUrl + "/create/"))
-    {
-        
-        
-    }
+    
 
     switch(request.Url.AbsoluteUri)
     {
@@ -78,9 +74,26 @@ while (true)
                 
             }
 
-
             break;
 
+        case serverUrl + "/delete/":
+            byte[] buffert = new byte[request.ContentLength64];
+            request.InputStream.Read(buffert, 0, buffert.Length);
+
+            string jsonstringg = Encoding.UTF8.GetString(buffert);
+
+            try
+            {
+                CoffeeOrder _order = JsonSerializer.Deserialize<CoffeeOrder>(jsonstringg);
+                
+                CoffeOrderList.Remove(_order);
+            }
+            catch (Exception ex)
+            {  
+                Console.WriteLine($"ERROR \n TEXT TYPE:{jsonstringg} IS NOT JSON DESERIALIZEBLE FORMAT");
+            }
+            break;
+            //
 
     }
 
